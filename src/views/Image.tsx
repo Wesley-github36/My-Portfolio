@@ -23,7 +23,6 @@ const Image = (
     const [ material, setMaterial ] = useState<MeshLambertMaterial>( null! )
     const [ size ] = useState( 5.5 )
 
-
     const states = useScroll()
 
     useFrame( () => {

@@ -6,14 +6,14 @@ import { lerp } from "@util/index";
 const useScroll = () => {
 
     const states = useRef( {
-        position: 0,
-        speed: 0
+        position   : 0,
+        speed      : 0,
+        isScrolling: false
     } )
 
     useEffect( () => {
 
         const onScroll = ( e: WheelEvent | TouchEvent ) => {
-
             if ( e instanceof WheelEvent )
                 states.current.speed = -e.deltaY * 0.0025
             else
@@ -31,9 +31,9 @@ const useScroll = () => {
     }, [] )
 
     useFrame( () => {
-        const { start, speed } = lerp( states.current.position, states.current.speed )
+        const { start, speed }  = lerp( states.current.position, states.current.speed )
         states.current.position = start;
-        states.current.speed = speed;
+        states.current.speed    = speed;
     } )
 
     return states.current
