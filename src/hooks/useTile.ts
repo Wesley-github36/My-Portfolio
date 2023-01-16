@@ -2,68 +2,15 @@ import { useEffect, useState } from "react";
 import { ShaderMaterial, TextureLoader, Vector2 } from "three";
 import { cameraAngle, getBounds } from "@util/index";
 
-const useTile = ( img: any ) => {
-
-    const [ props, setProps ] = useState<StateProps>( {
-        material: new ShaderMaterial(),
-        bounds  : {
-            height: 0,
-            width : 0
-        },
-        imgSize: []
-    } )
-
-    useEffect( () => {
-
-        const imageItem         = document.querySelector( ".js-slide" )
-        const { width, height } = getBounds( imageItem! );
-        const uniforms          = {
-            uTime     : { value: 0 },
-            uAlpha    : { value: 1 },
-            uTexture  : { value: 0 },
-            uMeshSize : { value: new Vector2( width, height ) },
-            uImageSize: { value: new Vector2( 0, 0 ) },
-            uScale    : { value: 1 },
-            uVelo     : { value: 0 },
-            uAngle    : { value: cameraAngle }
-        }
-        const mat               = new ShaderMaterial( {
-            transparent   : true,
-            uniforms      : uniforms,
-            vertexShader  : vertexShader,
-            fragmentShader: fragmentShader
-        } )
-
-        loader.load( img, ( texture ) => {
-            mat.uniforms.uTexture.value   = texture;
-            mat.uniforms.uImageSize.value = imageNaturalSize;
-        } )
-        mat.uniforms.uScale.value = Math.max( width, height ) / Math.hypot( width, height )
-
-        setProps( {
-            material: mat,
-            bounds  : {
-                width : width,
-                height: height
-            },
-            imgSize: imageNaturalSize
-        } )
-
-    }, [] )
-
-    return props;
-}
-
-
-const vertexShader   = `
+const vertexShader     = `
     varying vec2 vUv;
 
     void main() {
         vUv = uv;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
-`
-const fragmentShader = `
+`,
+      fragmentShader   = `
     varying vec2 vUv;
 
     uniform sampler2D uTexture;
@@ -117,18 +64,71 @@ const fragmentShader = `
         vec4 img = texture2D(uTexture, texUv);
         gl_FragColor = vec4(img.rgb, uAlpha);
 }
-`
+`,
+      loader           = new TextureLoader(),
+      imageNaturalSize = [ 1024, 1024 ];
 
-const loader           = new TextureLoader()
-const imageNaturalSize = [ 1024, 1024 ]
+
+const useTile = ( img: any ) => {
+
+    const [ props, setProps ] = useState<StateProps>( {
+        material: undefined,
+        bounds  : {
+            height: 0,
+            width : 0
+        },
+        imgNaturalSize: []
+    } )
+
+    useEffect( () => {
+        const imageItem         = document.querySelector( ".js-slide" );
+        const { width, height } = getBounds( imageItem! );
+
+        const uniforms = {
+            uTime     : { value: 0 },
+            uAlpha    : { value: 1 },
+            uTexture  : { value: 0 },
+            uMeshSize : { value: new Vector2( width, height ) },
+            uImageSize: { value: new Vector2( 0, 0 ) },
+            uScale    : { value: 1 },
+            uVelo     : { value: 0 },
+            uAngle    : { value: cameraAngle }
+        }
+        const mat      = new ShaderMaterial( {
+            transparent   : true,
+            uniforms      : uniforms,
+            vertexShader  : vertexShader,
+            fragmentShader: fragmentShader
+        } )
+
+        loader.load( img, ( texture ) => {
+            mat.uniforms.uTexture.value   = texture;
+            mat.uniforms.uImageSize.value = imageNaturalSize;
+        } )
+        mat.uniforms.uScale.value = Math.max( width, height ) / Math.hypot( width, height )
+
+        setProps( {
+            material: mat,
+            bounds  : {
+                width : width,
+                height: height
+            },
+            imgNaturalSize: imageNaturalSize
+        } )
+
+    }, [] )
+
+    return props;
+}
+
 
 type StateProps = {
-    material: ShaderMaterial,
+    material?: ShaderMaterial,
     bounds: {
         width: number,
         height: number
     },
-    imgSize: number[]
+    imgNaturalSize: number[]
 }
 
 

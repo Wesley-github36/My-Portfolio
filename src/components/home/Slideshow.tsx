@@ -21,6 +21,7 @@ const SlideshowStyle = styled.div`
   }
   @media ( width >= 768px ) and ( height > 568px ) {
     max-height: 768px;
+    padding: 9vh 0;
   }
 
   .slideshow-inner {
