@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShaderMaterial, TextureLoader, Vector2 } from "three";
+
 import { cameraAngle, getBounds } from "@util/index";
 
 const vertexShader     = `
@@ -126,15 +127,6 @@ const useTile = ( img: any ) => {
     }, [ bounds, material ] )
 
     return { bounds, material };
-}
-
-
-type StateProps = {
-    material?: ShaderMaterial,
-    bounds: {
-        width: number,
-        height: number
-    }
 }
 
 
