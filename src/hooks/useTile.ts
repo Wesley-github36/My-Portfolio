@@ -71,18 +71,14 @@ const vertexShader     = `
 
 const useTile = ( img: any ) => {
 
-    const [ props, setProps ] = useState<StateProps>( {
-        material: undefined,
-        bounds  : {
-            height: 0,
-            width : 0
-        },
-        imgNaturalSize: []
-    } )
+    const [ material, setMaterial ] = useState<ShaderMaterial | undefined>( undefined );
+    const [ bounds, setBounds ]     = useState( {
+        width : 0,
+        height: 0
+    } );
 
     useEffect( () => {
-        const imageItem         = document.querySelector( ".js-slide" );
-        const { width, height } = getBounds( imageItem! );
+        const { width, height } = getBounds( document.querySelector( ".js-slide" )! );
 
         const uniforms = {
             uTime     : { value: 0 },
@@ -107,18 +103,29 @@ const useTile = ( img: any ) => {
         } )
         mat.uniforms.uScale.value = Math.max( width, height ) / Math.hypot( width, height )
 
-        setProps( {
-            material: mat,
-            bounds  : {
-                width : width,
-                height: height
-            },
-            imgNaturalSize: imageNaturalSize
-        } )
+        setMaterial( mat )
+        setBounds( { width: width, height: height } )
 
     }, [] )
 
-    return props;
+    useEffect( () => {
+        const onResize = () => {
+            const mat               = material!;
+            const { width, height } = getBounds( document.querySelector( ".js-slide" )! );
+
+            mat.uniforms.uMeshSize.value = new Vector2( width, height );
+            mat.uniforms.uScale.value    = Math.max( width, height ) / Math.hypot( width, height )
+
+            setMaterial( mat )
+            setBounds( { width: width, height: height } )
+        }
+
+        window.addEventListener( "resize", onResize )
+        return () => { window.removeEventListener( "resize", onResize ) }
+
+    }, [ bounds, material ] )
+
+    return { bounds, material };
 }
 
 
@@ -127,8 +134,7 @@ type StateProps = {
     bounds: {
         width: number,
         height: number
-    },
-    imgNaturalSize: number[]
+    }
 }
 
 

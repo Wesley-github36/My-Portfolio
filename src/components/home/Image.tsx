@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Mesh, ShaderMaterial, TextureLoader, Vector2 } from "three";
 import { Plane } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
@@ -89,67 +89,59 @@ const Image = (
 ) => {
 
     const ref    = useRef<Mesh>( null! )
-    const tile   = useTile( image )
+    const { bounds, material }   = useTile( image )
     const states = useScroll();
+
 
     // useEffect( () => {
     //
+    //     // const onResize = () => {
+    //     //     const imageItem         = document.querySelector( ".js-slide" );
+    //     //     const { width, height } = getBounds( imageItem! );
+    //     //
+    //     //     const uniforms = {
+    //     //         uTime     : { value: 0 },
+    //     //         uAlpha    : { value: 1 },
+    //     //         uTexture  : { value: 0 },
+    //     //         uMeshSize : { value: new Vector2( width, height ) },
+    //     //         uImageSize: { value: new Vector2( 0, 0 ) },
+    //     //         uScale    : { value: 1 },
+    //     //         uVelo     : { value: 0 },
+    //     //         uAngle    : { value: cameraAngle }
+    //     //     }
+    //     //     const mat      = new ShaderMaterial( {
+    //     //         transparent   : true,
+    //     //         uniforms      : uniforms,
+    //     //         vertexShader  : vertexShader,
+    //     //         fragmentShader: fragmentShader
+    //     //     } )
+    //     //
+    //     //     loader.load( image, ( texture ) => {
+    //     //         mat.uniforms.uTexture.value   = texture;
+    //     //         mat.uniforms.uImageSize.value = imageNaturalSize;
+    //     //     } )
+    //     //     mat.uniforms.uScale.value = Math.max( width, height ) / Math.hypot( width, height )
+    //     //
+    //     //     ref.current.material = mat;
+    //     //     ref.current.scale.set( width, height, 1 )
+    //     //
+    //     // }
     //     const onResize = () => {
-    //         const materialCloned = tile.material!.clone()
+    //         const slide             = document.querySelector( ".js-slide" );
+    //         const { width, height } = getBounds( slide! )
     //
-    //         const imageItem         = document.querySelector( ".js-slide" );
-    //         const { width, height } = getBounds( imageItem! );
+    //         tile.material!.uniforms.uMeshSize.value = new Vector2( width, height );
+    //         tile.material!.uniforms.uScale.value    = Math.max( width, height ) / Math.hypot( width, height );
     //
-    //         materialCloned.uniforms.uMeshSize.value  = new Vector2( width, height )
-    //         materialCloned.uniforms.uScale.value     = Math.max( width, height ) / Math.hypot( width, height )
-    //         materialCloned.uniforms.uImageSize.value = tile.imgNaturalSize;
-    //
-    //         ref.current.material = materialCloned
-    //         ref.current.scale.set( width, height, 1 )
+    //         ( ref.current.material! as ShaderMaterial ).uniformsNeedUpdate = true;
+    //         ref.current.material = tile.material!;
+    //         ref.current.scale.set( width, height, 1 );
     //
     //     }
     //
     //     window.addEventListener( "resize", onResize )
     //     return () => window.removeEventListener( "resize", onResize )
     // }, [ tile ] )
-    useEffect( () => {
-
-        const onResize = () => {
-            const imageItem         = document.querySelector( ".js-slide" );
-            const { width, height } = getBounds( imageItem! );
-
-            const uniforms = {
-                uTime     : { value: 0 },
-                uAlpha    : { value: 1 },
-                uTexture  : { value: 0 },
-                uMeshSize : { value: new Vector2( width, height ) },
-                uImageSize: { value: new Vector2( 0, 0 ) },
-                uScale    : { value: 1 },
-                uVelo     : { value: 0 },
-                uAngle    : { value: cameraAngle }
-            }
-            const mat      = new ShaderMaterial( {
-                transparent   : true,
-                uniforms      : uniforms,
-                vertexShader  : vertexShader,
-                fragmentShader: fragmentShader
-            } )
-
-            loader.load( image, ( texture ) => {
-                mat.uniforms.uTexture.value   = texture;
-                mat.uniforms.uImageSize.value = imageNaturalSize;
-            } )
-            mat.uniforms.uScale.value = Math.max( width, height ) / Math.hypot( width, height )
-
-            ref.current.material = mat;
-            ref.current.scale.set( width, height, 1 )
-
-        }
-
-        window.addEventListener( "resize", onResize )
-        return () => window.removeEventListener( "resize", onResize )
-    }, [ tile ] )
-
     useFrame( () => {
 
         const absZ    = Math.abs( ref.current.position.z )
@@ -162,18 +154,20 @@ const Image = (
         else output = undefined
 
         if ( output ) store.index = index
-        if ( tile.material ) tile.material.opacity = 1 - opacity
+        if ( material ) material.opacity = 1 - opacity
 
         ref.current.position.z = resetPos( length, index, margin, states.position )
         ref.current.rotation.z = 0 - ( amplitude * Math.sin( states.position ) )
 
     } )
 
+    console.log("..rendering..")
+
     return (
         <Plane
             ref={ ref }
-            material={ tile.material }
-            scale={ [ tile.bounds.width, tile.bounds.height, 1 ] }
+            material={ material }
+            scale={ [ bounds.width, bounds.height, 1 ] }
             args={ [ 1, 1, cols, rows ] }
             onClick={ () => console.log( "Image: " + index + "   |  position: " + ref.current.position.z ) }
         />
