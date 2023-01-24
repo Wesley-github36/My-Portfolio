@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShaderMaterial, TextureLoader, Vector2 } from "three";
 
-import { cameraAngle, getBounds } from "@util/index";
+import { camera, getBounds } from "@util/index";
 
 const vertexShader     = `
     varying vec2 vUv;
@@ -89,7 +89,7 @@ const useTile = ( img: any ) => {
             uImageSize: { value: new Vector2( 0, 0 ) },
             uScale    : { value: 1 },
             uVelo     : { value: 0 },
-            uAngle    : { value: cameraAngle }
+            uAngle    : { value: camera.angle }
         }
         const mat      = new ShaderMaterial( {
             transparent   : true,

@@ -11,6 +11,7 @@ function App() {
         <Router >
             <Route path={ RoutePath.Home } element={ <Scene page={ 1 } /> } />
             <Route path={ RoutePath.About } element={ <Scene page={ 2 } /> } />
+            <Route path={ RoutePath.Work } element={ <Scene page={ 3 } /> } />
             <Route path={ RoutePath.NotFound } element={ <Scene /> } />
         </Router >
     )

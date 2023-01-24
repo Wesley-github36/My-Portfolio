@@ -5,7 +5,7 @@ import { Html } from "@react-three/drei";
 const NotFound = () => {
     return (
         <>
-            <Html>
+            <Html center>
                 Not Found
             </Html>
         </>

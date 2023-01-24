@@ -1,35 +1,35 @@
-import img from "../res/drawable/01.jpg"
-import img2 from "../res/drawable/02.jpg"
-import img3 from "../res/drawable/03.jpg"
-import img4 from "../res/drawable/04.jpg"
-import img5 from "../res/drawable/05.jpg"
-import img6 from "../res/drawable/06.jpg"
+import img from "@res/drawable/01.jpg"
+import img2 from "@res/drawable/02.jpg"
+import img3 from "@res/drawable/03.jpg"
+import img4 from "@res/drawable/04.jpg"
+import img5 from "@res/drawable/05.jpg"
+import img6 from "@res/drawable/06.jpg"
 
 const Projects = [
     {
-        title: "Dan. J. Wills",
+        title : "DanJ. Wills",
         avatar: img,
-        id: 0
+        link  : "dan-j-wills"
     }, {
-        title: "Deer Valley",
+        title : "Deer Valley",
         avatar: img2,
-        id: 1
+        link  : "deer-valley"
     }, {
-        title: "Emblem Rings",
+        title : "Emblem Rings",
         avatar: img3,
-        id: 2
+        link  : "emblem-rings"
     }, {
-        title: "Dita EyeWear",
+        title : "Dita EyeWear",
         avatar: img4,
-        id: 3
+        link  : "dita-eye-wear"
     }, {
-        title: "G.W. BinneDijk",
+        title : "G.W. BinneDijk",
         avatar: img5,
-        id: 4
+        link  : "gw-binne-djik"
     }, {
-        title: "C. TagliaVini",
+        title : "C.J TagliaVini",
         avatar: img6,
-        id: 5
+        link  : "c-taglia-vini"
     }
 ]
 

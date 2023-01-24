@@ -8,12 +8,13 @@ const Images = () => {
 
     return (
         <group >
-            { Projects.map( ( { avatar, title }, index ) => (
+            { Projects.map( ( { avatar, link }, index ) => (
                 <Image
-                    key={ `image-${ index }` }
+                    key={ "image-" + index }
                     index={ index }
                     length={ Projects.length }
                     image={ avatar }
+                    link={ link }
                 />
             ) ) }
         </group >

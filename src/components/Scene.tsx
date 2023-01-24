@@ -2,18 +2,14 @@ import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Html, useProgress } from "@react-three/drei";
 
-import Color from "@theme/Color";
 import Home from "@components/home/Home";
 import About from "@components/about/About";
 import NotFound from "@components/notfound/NotFound";
 import Slideshow from "@components/home/Slideshow";
+import Details from "@components/work/Work";
+import { camera } from "@util/index";
+import Color from "@theme/Color";
 
-import { cameraAngle, getFov } from "@util/index";
-
-const perspective = 800,
-      fov         = getFov( perspective ),
-      near        = 1,
-      far         = 2000;
 
 const Loader = () => {
 
@@ -33,11 +29,10 @@ const Scene = ( { page }: SceneProps ) => {
             <Slideshow />
             <Canvas
                 camera={ {
-                    position: [ 0, 0, perspective ],
-                    fov     : fov,
-                    rotation: [ 0, 0, -cameraAngle ],
-                    near    : near,
-                    far     : far
+                    position: [ 0, 0, camera.perspective ],
+                    fov     : camera.fov(),
+                    near    : camera.near,
+                    far     : camera.far
                 } }
                 style={ {
                     position  : "fixed",
@@ -56,6 +51,7 @@ const Scene = ( { page }: SceneProps ) => {
                 <Suspense fallback={ <Loader /> } >
                     { page === 1 && <Home /> }
                     { page === 2 && <About /> }
+                    { page === 3 && <Details /> }
                     { !page && <NotFound /> }
                 </Suspense >
             </Canvas >

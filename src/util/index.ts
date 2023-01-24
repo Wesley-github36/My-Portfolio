@@ -6,7 +6,7 @@ export const lerp = ( start: number, speed: number ) => {
     speed *= 0.8;
 
     const rounded = Math.round( start );
-    const diff = rounded - start;
+    const diff    = rounded - start;
 
     start += Math.sign( diff ) * Math.pow( Math.abs( diff ), 0.7 ) * 0.015;
 
@@ -33,10 +33,10 @@ export const getBounds = ( el: Element ) => {
     const bounds = el.getBoundingClientRect()
 
     return {
-        width: bounds.width,
+        width : bounds.width,
         height: bounds.height,
-        top: bounds.top,
-        left: bounds.left
+        top   : bounds.top,
+        left  : bounds.left
     }
 }
 
@@ -45,4 +45,12 @@ export const getScaleFactor = ( width: number ) =>
 
 export const getFov = ( p: number ) => ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / p ) ) ) / Math.PI
 
-export const cameraAngle = Math.PI / 6
+export const camera = {
+    perspective: 800,
+    near       : 1,
+    far        : 2000,
+    angle      : Math.PI / 6,
+    fov        : function () {
+        return getFov( this.perspective )
+    }
+}

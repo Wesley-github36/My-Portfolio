@@ -13,12 +13,14 @@ const SlideshowStyle = styled.div`
   width: 100%;
   height: 100%;
   padding: 12vh 0;
-  opacity: 0;
   user-select: none;
+  pointer-events: none;
+  opacity: 0;
 
   @media ( width < 768px ) {
     padding: 15vh 15vw;
   }
+
   @media ( width >= 768px ) and ( height > 568px ) {
     max-height: 768px;
     padding: 9vh 0;
@@ -34,6 +36,7 @@ const SlideshowStyle = styled.div`
       max-width: 768px;
     }
   }
+  
 `;
 
 const Slideshow = () => {
@@ -41,11 +44,12 @@ const Slideshow = () => {
         <SlideshowStyle >
             <ul className="slideshow-inner | js-slideshow" >
                 {
-                    Projects.map( ( { avatar }, index ) =>
+                    Projects.map( ( { avatar, title }, index ) =>
                         <Slide
                             key={ index }
                             avatar={ avatar }
                             index={ index }
+                            title={ title }
                         />
                     )
                 }
