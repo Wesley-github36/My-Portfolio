@@ -11,9 +11,6 @@ import useRefArray from "@hooks/useRefArray";
 
 
 const margin = 1000;
-let titlePos = {
-    y: 0
-}
 
 
 const Title = (
@@ -24,19 +21,18 @@ const Title = (
     }: TitleProps
 ) => {
 
-    const states                            = useScroll();
-    const splitText                         = title.split( " " );
+
     const { refs: textRefs, addToRefArray } = useRefArray<Mesh>()
     const { width }                         = useThree( ( state ) => state.viewport )
     const yShift                            = useRef( {
         max: new Vector3()
     } )
+    const states                            = useScroll( );
 
+    const splitText = title.split( " " );
 
     useEffect( () => {
         yShift.current.max = textRefs.current[ 0 ].geometry.boundingBox!.max;
-
-
         textRefs.current.forEach( ( ref, index ) => {
             const xShift   = 0.15 * width;
             ref.position.x = index % 2 === 0 ? -xShift : xShift;
@@ -45,9 +41,17 @@ const Title = (
     }, [] )
     useFrame( () => {
 
-        textRefs.current[ 0 ].position.y = resetPos( length, index, margin, states.position )
-        textRefs.current[ 1 ].position.y = resetPos( length, index, margin, states.position )
-            - ( yShift.current.max.y + 3 )
+        const absZ    = Math.abs( textRefs.current[ 0 ].position.z )
+        const opacity = Math.min( absZ, margin ) / margin;
+
+        //@ts-ignore
+        textRefs.current[ 0 ].material.opacity = 1 - opacity
+        //@ts-ignore
+        textRefs.current[ 1 ].material.opacity = 1 - opacity
+
+        textRefs.current[ 0 ].position.z = resetPos( length, index, margin, states.position )
+        textRefs.current[ 1 ].position.z = resetPos( length, index, margin, states.position )
+        textRefs.current[ 1 ].position.y = 0 - ( yShift.current.max.y + 3 )
     } )
 
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { getBounds } from "@util/index";
 
-const SlideStyle = styled.li`
+const HomeSlideStyle = styled.li`
   position: absolute;
   margin-bottom: 15%;
   left: 0;
@@ -53,7 +53,7 @@ const SlideStyle = styled.li`
 
 `;
 
-const Slide = (
+const HomeSlide = (
     {
         avatar,
         index,
@@ -62,7 +62,7 @@ const Slide = (
 ) => {
     return (
 
-        <SlideStyle className="slide | js-slide" >
+        <HomeSlideStyle className="slide | js-slide" >
             <div className="wrapper" >
                 <img
                     src={ avatar }
@@ -70,11 +70,11 @@ const Slide = (
                 />
                 <h3 className="title | js-title" >{ title }</h3 >
             </div >
-        </SlideStyle >
+        </HomeSlideStyle >
     )
 }
 
-export default Slide;
+export default HomeSlide;
 
 
 type SlideProps = {

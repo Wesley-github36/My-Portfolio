@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import Projects from "@data/Projects";
-import Slide from "@components/home/Slide";
+import HomeSlide from "@components/home/HomeSlide";
 
-const SlideshowStyle = styled.div`
+const HomeSlideshowStyle = styled.div`
   display: flex;
   justify-content: center;
   position: fixed;
@@ -39,13 +39,13 @@ const SlideshowStyle = styled.div`
   
 `;
 
-const Slideshow = () => {
+const HomeSlideshow = () => {
     return (
-        <SlideshowStyle >
+        <HomeSlideshowStyle >
             <ul className="slideshow-inner | js-slideshow" >
                 {
                     Projects.map( ( { avatar, title }, index ) =>
-                        <Slide
+                        <HomeSlide
                             key={ index }
                             avatar={ avatar }
                             index={ index }
@@ -54,8 +54,8 @@ const Slideshow = () => {
                     )
                 }
             </ul >
-        </SlideshowStyle >
+        </HomeSlideshowStyle >
     )
 }
 
-export default Slideshow;
+export default HomeSlideshow;

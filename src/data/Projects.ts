@@ -15,21 +15,21 @@ const Projects = [
         avatar: img2,
         link  : "deer-valley"
     }, {
-        title : "Emblem Rings",
+        title : "Embem Rings",
         avatar: img3,
-        link  : "emblem-rings"
+        link  : "embem-rings"
     }, {
-        title : "Dita EyeWear",
+        title : "Dita Wear",
         avatar: img4,
-        link  : "dita-eye-wear"
+        link  : "dita-wear"
     }, {
-        title : "G.W. BinneDijk",
+        title : "Binne Dijk",
         avatar: img5,
-        link  : "gw-binne-djik"
+        link  : "binne-djik"
     }, {
-        title : "C.J TagliaVini",
+        title : "Tagli Vini",
         avatar: img6,
-        link  : "c-taglia-vini"
+        link  : "tagli-vini"
     }
 ]
 

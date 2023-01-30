@@ -5,8 +5,8 @@ import { Html, useProgress } from "@react-three/drei";
 import Home from "@components/home/Home";
 import About from "@components/about/About";
 import NotFound from "@components/notfound/NotFound";
-import Slideshow from "@components/home/Slideshow";
-import Details from "@components/work/Work";
+import Work from "@components/work/Work";
+
 import { camera } from "@util/index";
 import Color from "@theme/Color";
 
@@ -26,7 +26,6 @@ const Scene = ( { page }: SceneProps ) => {
 
     return (
         <>
-            <Slideshow />
             <Canvas
                 camera={ {
                     position: [ 0, 0, camera.perspective ],
@@ -49,9 +48,10 @@ const Scene = ( { page }: SceneProps ) => {
                 } }
             >
                 <Suspense fallback={ <Loader /> } >
+
                     { page === 1 && <Home /> }
                     { page === 2 && <About /> }
-                    { page === 3 && <Details /> }
+                    { page === 3 && <Work /> }
                     { !page && <NotFound /> }
                 </Suspense >
             </Canvas >

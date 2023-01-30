@@ -23,19 +23,19 @@ const ProjectDetails = [
     }, {
         id: 2,
         images: [img3, img3, img3, img3, img3, img3],
-        link: "emblem-rings"
+        link: "embem-rings"
     }, {
         id: 3,
         images: [img4, img4, img4, img4, img4, img4],
-        link: "dita-eye-wear"
+        link: "dita-wear"
     }, {
         id: 4,
         images: [img5, img5, img5, img5, img5, img5],
-        link: "gw-binne-djik"
+        link: "binne-djik"
     }, {
         id: 5,
         images: [img6, img6, img6, img6, img6, img6],
-        link: "c-taglia-vini"
+        link: "tagli-vini"
     }
 ];
 

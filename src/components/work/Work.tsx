@@ -14,9 +14,18 @@ const Work = () => {
     if ( !project ) return ( <NotFound /> )
 
     return (
-        <Html >
-            { workTitle }
-        </Html >
+        <Html
+            center
+            style={{
+                position  : "fixed",
+                width     : "100vw",
+                height    : "100vh",
+                left      : 0,
+                top       : 0,
+                background: "#123"
+            }}
+        >
+        </Html>
     )
 }
 

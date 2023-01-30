@@ -22,7 +22,7 @@ const Image = (
         image,
         index,
         length,
-        link,
+        link
     }: ImageProps
 ) => {
 
@@ -50,7 +50,7 @@ const Image = (
         else output = undefined
 
         if ( output )
-            store.index = index
+            store.link = link
 
         if ( material )
             material.uniforms.uAlpha.value = 1 - opacity;

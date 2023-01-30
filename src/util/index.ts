@@ -24,7 +24,7 @@ export const resetPos = (
 
 
 export const store = {
-    index: -1
+    link: ""
 }
 
 
