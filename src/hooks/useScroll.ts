@@ -11,7 +11,6 @@ const useScroll = ( callback?: ( isScrolling: boolean ) => void ) => {
     const states = useRef( {
         position   : 0,
         speed      : 0,
-        isScrolling: false
     } )
 
     useEffect( () => {

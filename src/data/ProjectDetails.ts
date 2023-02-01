@@ -1,9 +1,9 @@
-import img1 from "@res/drawable/project1/greenctg.jpg";
-import img2 from "@res/drawable/project2/cavinimg.jpg"
-import img3 from "@res/drawable/project3/utracker.jpg"
-import img4 from "@res/drawable/project4/04.jpg"
-import img5 from "@res/drawable/project5/02.jpg"
-import img6 from "@res/drawable/project6/06.jpg"
+import img1 from "@res/drawable/01.jpg";
+import img2 from "@res/drawable/02.jpg"
+import img3 from "@res/drawable/03.jpg"
+import img4 from "@res/drawable/04.jpg"
+import img5 from "@res/drawable/05.jpg"
+import img6 from "@res/drawable/06.jpg"
 
 
 export type IProjectDetails = {

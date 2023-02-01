@@ -3,39 +3,37 @@ import { Scene } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import Projects from "@data/Projects";
-import Title from "@components/home/Title";
+import HomeImage from "@components/home/HomeImage";
 
 
-const Titles = () => {
+const HomeImages = () => {
 
-    const scene = useRef<Scene>( null! )
-    const { camera } = useThree()
+    const scene      = useRef<Scene>( null! )
+    const { camera } = useThree();
 
     useFrame( ( { gl } ) => {
-        gl.clearDepth()
         gl.render( scene.current, camera )
 
-    }, 2 )
+    }, 1 )
 
     return (
         <scene
             ref={ scene }
         >
             <group >
-
-                { Projects.map( ( { title, link }, index ) =>
-                    <Title
-                        key={ "title-" + index }
+                { Projects.map( ( { avatar, link }, index ) => (
+                    <HomeImage
+                        key={ link }
                         index={ index }
                         length={ Projects.length }
-                        title={ title }
+                        image={ avatar }
                         link={ link }
                     />
-                ) }
+                ) ) }
 
             </group >
         </scene >
     )
 }
 
-export default Titles;
+export default HomeImages;

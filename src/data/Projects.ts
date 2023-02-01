@@ -5,31 +5,37 @@ import img4 from "@res/drawable/04.jpg"
 import img5 from "@res/drawable/05.jpg"
 import img6 from "@res/drawable/06.jpg"
 
+
 const Projects = [
     {
         title : "DanJ. Wills",
         avatar: img,
-        link  : "dan-j-wills"
+        link  : "dan-j-wills",
     }, {
         title : "Deer Valley",
         avatar: img2,
-        link  : "deer-valley"
+        link  : "deer-valley",
+
     }, {
         title : "Embem Rings",
         avatar: img3,
-        link  : "embem-rings"
+        link  : "embem-rings",
+
     }, {
         title : "Dita Wear",
         avatar: img4,
-        link  : "dita-wear"
+        link  : "dita-wear",
+
     }, {
         title : "Binne Dijk",
         avatar: img5,
-        link  : "binne-djik"
+        link  : "binne-djik",
+
     }, {
         title : "Tagli Vini",
         avatar: img6,
-        link  : "tagli-vini"
+        link  : "tagli-vini",
+
     }
 ]
 

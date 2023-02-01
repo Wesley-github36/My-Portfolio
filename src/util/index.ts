@@ -1,5 +1,4 @@
-import { Expo, gsap } from "gsap";
-import { Object3D } from "three";
+import { useEffect, useState } from "react";
 
 export const lerp = ( start: number, speed: number ) => {
     start += speed;
@@ -27,21 +26,6 @@ export const store = {
     link: ""
 }
 
-
-export const getBounds = ( el: Element ) => {
-
-    const bounds = el.getBoundingClientRect()
-
-    return {
-        width : bounds.width,
-        height: bounds.height,
-        top   : bounds.top,
-        left  : bounds.left
-    }
-}
-
-export const getScaleFactor = ( width: number ) =>
-    width < 1024 ? { widthFactor: 0.007, heightFactor: 0.011 } : { widthFactor: 0.005, heightFactor: 0.005 }
 
 export const getFov = ( p: number ) => ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / p ) ) ) / Math.PI
 

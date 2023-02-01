@@ -2,32 +2,32 @@ import React, { useEffect, useRef } from "react";
 import { Text } from "@react-three/drei";
 import { Mesh, Vector3 } from "three";
 
-import font from "@res/font/AbrilFatface-Regular.ttf"
-import Color from "@theme/Color"
-import useScroll from "@hooks/useScroll";
+import font from "@res/font/AbrilFatface-Regular.ttf";
+import Color from "@theme/Color";
+import useRefArray from "@hooks/useRefArray";
 import { useFrame, useThree } from "@react-three/fiber";
 import { resetPos } from "@util/index";
-import useRefArray from "@hooks/useRefArray";
-
 
 const margin = 1000;
-
-
-const Title = (
+const defaultStates = {
+    position: 0,
+    speed: 0
+}
+const TitleText = (
     {
+        title,
         index,
         length,
-        title
-    }: TitleProps
+        states = defaultStates,
+        scrollable
+    }: Props
 ) => {
-
 
     const { refs: textRefs, addToRefArray } = useRefArray<Mesh>()
     const { width }                         = useThree( ( state ) => state.viewport )
     const yShift                            = useRef( {
         max: new Vector3()
     } )
-    const states                            = useScroll( );
 
     const splitText = title.split( " " );
 
@@ -41,16 +41,18 @@ const Title = (
     }, [] )
     useFrame( () => {
 
-        const absZ    = Math.abs( textRefs.current[ 0 ].position.z )
-        const opacity = Math.min( absZ, margin ) / margin;
+        if ( scrollable ) {
+            const absZ    = Math.abs( textRefs.current[ 0 ].position.z )
+            const opacity = Math.min( absZ, margin ) / margin;
 
-        //@ts-ignore
-        textRefs.current[ 0 ].material.opacity = 1 - opacity
-        //@ts-ignore
-        textRefs.current[ 1 ].material.opacity = 1 - opacity
+            //@ts-ignore
+            textRefs.current[ 0 ].material.opacity = 1 - opacity
+            //@ts-ignore
+            textRefs.current[ 1 ].material.opacity = 1 - opacity
 
-        textRefs.current[ 0 ].position.z = resetPos( length, index, margin, states.position )
-        textRefs.current[ 1 ].position.z = resetPos( length, index, margin, states.position )
+            textRefs.current[ 0 ].position.z = resetPos( length, index, margin, states.position )
+            textRefs.current[ 1 ].position.z = resetPos( length, index, margin, states.position )
+        }
         textRefs.current[ 1 ].position.y = 0 - ( yShift.current.max.y + 3 )
     } )
 
@@ -76,12 +78,16 @@ const Title = (
     )
 }
 
-export default Title;
+export default TitleText;
 
 
-type TitleProps = {
+type Props = {
     index: number,
     length: number,
     title: string,
-    link: string
+    scrollable: boolean,
+    states: {
+        position: number,
+        speed: number
+    }
 }

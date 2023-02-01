@@ -67,6 +67,7 @@ const HomeSlide = (
                 <img
                     src={ avatar }
                     alt={ `project-avatar` }
+
                 />
                 <h3 className="title | js-title" >{ title }</h3 >
             </div >

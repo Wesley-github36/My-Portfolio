@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import Images from "@components/home/Images";
-import Titles from "@components/home/Titles";
+import HomeImages from "@components/home/HomeImages";
+import HomeTitles from "@components/home/HomeTitles";
 import { useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import HomeSlideshow from "@components/home/HomeSlideshow";
@@ -32,8 +32,8 @@ const Home = () => {
             </Html >
 
             <group >
-                <Images />
-                <Titles />
+                <HomeImages />
+                <HomeTitles />
             </group >
         </>
     )

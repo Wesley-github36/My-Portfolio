@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
-import { Mesh } from "three";
-import { Plane } from "@react-three/drei";
+import React, { useEffect, useRef, useState } from "react";
+import { Mesh, ShaderMaterial, TextureLoader } from "three";
 import { useFrame } from "@react-three/fiber";
 
-
-import useTile from "@hooks/useTile";
 import useScroll from "@hooks/useScroll";
-import { camera, resetPos, store } from "@util/index";
+import { camera, resetPos } from "@util/index";
 import { useNavigate } from "react-router-dom";
+import { Plane } from "@react-three/drei";
+import useMaterial from "@hooks/useMaterial";
 
 
 const cols      = 8,
@@ -17,7 +16,7 @@ const cols      = 8,
 
 let output;
 
-const Image = (
+const HomeImage = (
     {
         image,
         index,
@@ -26,10 +25,11 @@ const Image = (
     }: ImageProps
 ) => {
 
+
     const ref                  = useRef<Mesh>( null! )
-    const { bounds, material } = useTile( image )
     const states               = useScroll();
     const navigate             = useNavigate();
+    const { material, bounds } = useMaterial( { selector: ".js-slide", img: image } )
 
     const onNavigate = () => {
         const absZ = Math.abs( ref.current.position.z )
@@ -49,11 +49,8 @@ const Image = (
             output = Math.floor( absZ )
         else output = undefined
 
-        if ( output )
-            store.link = link
-
-        if ( material )
-            material.uniforms.uAlpha.value = 1 - opacity;
+        if ( ref.current )
+            ( ref.current.material as ShaderMaterial ).uniforms.uAlpha.value = 1 - opacity;
 
         ref.current.position.z = resetPos( length, index, margin, states.position ) - 0.01
         ref.current.rotation.z = camera.angle - ( amplitude * Math.sin( states.position ) )
@@ -61,20 +58,18 @@ const Image = (
     } )
 
     return (
-        <>
-            <Plane
-                ref={ ref }
-                material={ material }
-                scale={ [ bounds.width, bounds.height, 1 ] }
-                args={ [ 1, 1, cols, rows ] }
-                onClick={ () => onNavigate() }
-            />
 
-        </>
+        <Plane
+            ref={ ref }
+            scale={ [ bounds.width, bounds.height, 1 ] }
+            args={ [ 1, 1, rows, cols ] }
+            material={ material }
+            onClick={ () => onNavigate() }
+        />
     )
 }
 
-export default Image;
+export default HomeImage;
 
 
 type ImageProps = {
