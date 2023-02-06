@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Mesh, ShaderMaterial, TextureLoader } from "three";
+import React, { useRef } from "react";
+import { Group, Mesh, ShaderMaterial } from "three";
 import { useFrame } from "@react-three/fiber";
+import { useNavigate } from "react-router-dom";
 
 import useScroll from "@hooks/useScroll";
-import { camera, resetPos } from "@util/index";
-import { useNavigate } from "react-router-dom";
-import { Plane } from "@react-three/drei";
-import useMaterial from "@hooks/useMaterial";
+import { camera, lerp, lerpPos } from "@util/index";
+import Tile from "@components/Tile";
 
 
 const cols      = 8,
@@ -21,50 +20,52 @@ const HomeImage = (
         image,
         index,
         length,
-        link
+        link,
+        element,
+        height,
+        width
     }: ImageProps
 ) => {
 
 
-    const ref                  = useRef<Mesh>( null! )
-    const states               = useScroll();
-    const navigate             = useNavigate();
-    const { material, bounds } = useMaterial( { selector: ".js-slide", img: image } )
+    const states   = useScroll();
+    const navigate = useNavigate();
+    const ref      = useRef<Group>( null! )
 
     const onNavigate = () => {
-        const absZ = Math.abs( ref.current.position.z )
+        const abZ = Math.abs( ref.current.position.z )
 
-        if ( 0 <= absZ && absZ < 100 )
+        if ( 0 <= abZ && abZ <= 100 )
             navigate( `/work/${ link }` )
     }
 
     useFrame( () => {
 
+        const { start, speed }  = lerp( states.current.position, states.current.speed )
+        states.current.position = start;
+        states.current.speed    = speed;
+
         const absZ    = Math.abs( ref.current.position.z )
         const opacity = Math.min( absZ, margin ) / margin;
 
-        if ( 0 <= absZ && absZ < 100 )
-            output = Math.ceil( absZ )
-        else if ( 100 <= absZ && absZ < 200 )
-            output = Math.floor( absZ )
-        else output = undefined
+        if ( ref.current ) {
+            const mesh                                                = ref.current.children[ 0 ] as Mesh
+            ( mesh.material as ShaderMaterial ).uniforms.uAlpha.value = 1 - opacity;
+        }
 
-        if ( ref.current )
-            ( ref.current.material as ShaderMaterial ).uniforms.uAlpha.value = 1 - opacity;
-
-        ref.current.position.z = resetPos( length, index, margin, states.position ) - 0.01
-        ref.current.rotation.z = camera.angle - ( amplitude * Math.sin( states.position ) )
+        ref.current.position.z = lerpPos( length, index, margin, states.current.position ) - 0.01
+        ref.current.rotation.z = camera.angle - ( amplitude * Math.sin( states.current.position ) )
 
     } )
 
     return (
-
-        <Plane
+        <Tile
             ref={ ref }
-            scale={ [ bounds.width, bounds.height, 1 ] }
-            args={ [ 1, 1, rows, cols ] }
-            material={ material }
-            onClick={ () => onNavigate() }
+            image={ image }
+            element={ element }
+            onClick={ onNavigate }
+            width={ width }
+            height={ height }
         />
     )
 }
@@ -77,4 +78,7 @@ type ImageProps = {
     index: number,
     length: number,
     link: string,
+    element: HTMLImageElement,
+    width: number,
+    height: number
 }

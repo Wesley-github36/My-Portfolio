@@ -1,23 +1,31 @@
 import React, { useRef } from "react";
-import { Plane } from "@react-three/drei";
-import { Mesh } from "three";
+import Tile from "@components/Tile";
+import { Group } from "three";
+import { useThree } from "@react-three/fiber";
 
 const WorkImage = (
     {
-        image,
-        link,
+        element,
         index,
+        width,
+        height,
+        gap
     }: Props
 ) => {
 
 
-    const ref                  = useRef<Mesh>( null! )
+    const ref                 = useRef<Group>( null! )
+    const { height: vHeight } = useThree( state => state.viewport )
+    const posY                = ( vHeight / 2 - height ) - ( ( height + gap ) * index )
 
     return (
-        <Plane
+        <Tile
             ref={ ref }
-            // material={ material }
-            // scale={ [ bounds.width, bounds.height, 1 ] }
+            image={ element.src }
+            element={ element }
+            position={ [ 0, posY, 0 ] }
+            height={ height }
+            width={ width }
         />
     )
 }
@@ -26,7 +34,9 @@ export default WorkImage;
 
 
 type Props = {
-    image: any,
-    link: string,
-    index: number
+    element: HTMLImageElement
+    index: number,
+    width: number,
+    height: number,
+    gap: number
 }

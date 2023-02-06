@@ -1,18 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { Text } from "@react-three/drei";
 import { Mesh, Vector3 } from "three";
+import { useFrame, useThree } from "@react-three/fiber";
+
 
 import font from "@res/font/AbrilFatface-Regular.ttf";
 import Color from "@theme/Color";
 import useRefArray from "@hooks/useRefArray";
-import { useFrame, useThree } from "@react-three/fiber";
-import { resetPos } from "@util/index";
+import { lerpPos } from "@util/index";
 
 const margin = 1000;
 const defaultStates = {
     position: 0,
     speed: 0
 }
+
 const TitleText = (
     {
         title,
@@ -50,8 +52,8 @@ const TitleText = (
             //@ts-ignore
             textRefs.current[ 1 ].material.opacity = 1 - opacity
 
-            textRefs.current[ 0 ].position.z = resetPos( length, index, margin, states.position )
-            textRefs.current[ 1 ].position.z = resetPos( length, index, margin, states.position )
+            textRefs.current[ 0 ].position.z = lerpPos( length, index, margin, states.position )
+            textRefs.current[ 1 ].position.z = lerpPos( length, index, margin, states.position )
         }
         textRefs.current[ 1 ].position.y = 0 - ( yShift.current.max.y + 3 )
     } )

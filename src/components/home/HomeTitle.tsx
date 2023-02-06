@@ -1,14 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { Text } from "@react-three/drei";
-import { Mesh, Vector3 } from "three";
+import React from "react";
 
-import font from "@res/font/AbrilFatface-Regular.ttf"
-import Color from "@theme/Color"
 import useScroll from "@hooks/useScroll";
-import { useFrame, useThree } from "@react-three/fiber";
-import { resetPos, store } from "@util/index";
-import useRefArray from "@hooks/useRefArray";
 import TitleText from "@components/TitleText";
+import { useFrame } from "@react-three/fiber";
+import { lerp } from "@util/index";
 
 
 const HomeTitle = (
@@ -21,11 +16,17 @@ const HomeTitle = (
 
     const states = useScroll();
 
+    useFrame(() => {
+        const { start, speed }  = lerp( states.current.position, states.current.speed )
+        states.current.position = start;
+        states.current.speed    = speed;
+    })
+
     return (
         <TitleText
             title={ title }
             scrollable
-            states={ states }
+            states={ states.current }
             length={ length }
             index={ index }
         />

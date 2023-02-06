@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 export const lerp = ( start: number, speed: number ) => {
     start += speed;
     speed *= 0.8;
@@ -12,22 +10,43 @@ export const lerp = ( start: number, speed: number ) => {
     return { speed, start }
 }
 
-export const resetPos = (
+export const lerpPos = (
     length: number,
     index: number,
     margin: number,
-    position: number
-) => (
-    margin * ( length - index + position ) + ( 1000000 )
-) % ( length * margin ) - length / 2 * margin
+    position: number,
+    infinite = true
+) => {
+    if ( infinite )
+        return ( margin * ( length - index + position ) + ( 1000000 ) )
+            % ( length * margin ) - length / 2 * margin
 
-
-export const store = {
-    link: ""
+    return margin * ( index + position )
 }
 
 
-export const getFov = ( p: number ) => ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / p ) ) ) / Math.PI
+export const getBoundingRect = (
+    querySelectorParent: string,
+    querySelectorChildren: string
+) => {
+    const parentArray = [ ...document.querySelectorAll( querySelectorParent ) ] as Element[];
+
+    return parentArray.map( ( element ) => {
+        const image             = element.querySelector( querySelectorChildren ) as HTMLImageElement
+        const paddingBottom     = parseInt( window.getComputedStyle( element )
+                                                  .getPropertyValue( "padding-bottom" )
+                                                  .slice( 0, -2 ) );
+        const { width, height } = image.getBoundingClientRect();
+
+        return {
+            imageElement: image,
+            gap         : paddingBottom,
+            width       : width,
+            height      : height
+        }
+    } );
+}
+
 
 export const camera = {
     perspective: 800,
@@ -35,6 +54,6 @@ export const camera = {
     far        : 2000,
     angle      : Math.PI / 6,
     fov        : function () {
-        return getFov( this.perspective )
+        return ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / this.perspective ) ) ) / Math.PI
     }
 }

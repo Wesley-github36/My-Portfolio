@@ -3,32 +3,32 @@ import { useEffect, useRef, useState } from "react";
 const useBounds = ( selector: string ) => {
     const [ element, setElement ] = useState<Element | null>();
     const bounds                  = useRef( {
-        width : 0,
-        height: 0
+        width        : 0,
+        height       : 0,
     } )
 
     useEffect( () => {
         const el = document.querySelector( selector )
 
         if ( el ) {
-            const getBounds = el.getBoundingClientRect();
-            bounds.current  = {
+            const getBounds   = el.getBoundingClientRect();
+
+            bounds.current = {
                 width : getBounds.width,
                 height: getBounds.height
             }
-
-            setElement( el )
         }
 
-    }, [ element ] )
+    }, [ ] )
     useEffect( () => {
 
         const onResize = () => {
             if ( element ) {
                 const getBounds = element.getBoundingClientRect();
-                bounds.current  = {
+
+                bounds.current = {
                     width : getBounds.width,
-                    height: getBounds.height
+                    height: getBounds.height,
                 }
             }
         }
@@ -43,4 +43,6 @@ const useBounds = ( selector: string ) => {
 
 
 export default useBounds;
+
+
 

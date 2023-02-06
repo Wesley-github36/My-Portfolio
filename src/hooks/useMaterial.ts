@@ -1,8 +1,9 @@
-import { ShaderMaterial, Texture, TextureLoader, Vector2 } from "three";
-import { camera } from "@util/index";
-import { useEffect, useRef } from "react";
-import useBounds from "@hooks/useBounds";
+import { ShaderMaterial, Texture, Vector2 } from "three";
 import { useTexture } from "@react-three/drei";
+import { useEffect, useRef } from "react";
+
+import { camera } from "@util/index";
+import useBounds from "@hooks/useBounds";
 
 const vertexShader   = `
     varying vec2 vUv;
@@ -67,6 +68,7 @@ const vertexShader   = `
         gl_FragColor = vec4(img.rgb, uAlpha);
 }
 `;
+
 const useMaterial = (
     {
         selector,
@@ -92,21 +94,26 @@ const useMaterial = (
     } ) );
     const bounds   = useBounds( selector )
     const texture  = useTexture( img ) as Texture
+    let b: DOMRect | undefined
 
     useEffect( () => {
+        const setB = document.querySelector( selector )?.getBoundingClientRect();
 
-        const boundsValues = Object.values( bounds ) as number[];
+        if ( setB ) {
+            b = setB
+            const boundsValues = Object.values( bounds ) as number[];
 
-        material.current.uniforms.uTexture.value   = texture
-        material.current.uniforms.uImageSize.value = [ texture.image.naturalWidth, texture.image.naturalHeight ]
-        material.current.uniforms.uScale.value     = Math.max( ...boundsValues ) / Math.hypot( ...boundsValues )
-        material.current.uniforms.uMeshSize.value  = boundsValues
+            material.current.uniforms.uTexture.value   = texture
+            material.current.uniforms.uImageSize.value = [ texture.image.naturalWidth, texture.image.naturalHeight ]
+            material.current.uniforms.uScale.value     = Math.max( ...boundsValues ) / Math.hypot( ...boundsValues )
+            material.current.uniforms.uMeshSize.value  = boundsValues
+        }
 
-    }, [ bounds ] )
+    }, [] )
 
     return {
         material: material.current,
-        bounds
+        b
     }
 }
 

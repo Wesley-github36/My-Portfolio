@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 import Projects from "@data/Projects";
-import HomeSlide from "@components/home/HomeSlide";
+import Slide from "@components/html/Slide";
 
-const HomeSlideshowStyle = styled.div`
+const SlideshowStyle = styled.div`
   display: flex;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   padding: 12vh 0;
   user-select: none;
@@ -36,26 +36,27 @@ const HomeSlideshowStyle = styled.div`
       max-width: 768px;
     }
   }
-  
+
 `;
 
-const HomeSlideshow = () => {
+const Slideshow = () => {
     return (
-        <HomeSlideshowStyle >
+        <SlideshowStyle >
             <ul className="slideshow-inner | js-slideshow" >
                 {
-                    Projects.map( ( { avatar, title }, index ) =>
-                        <HomeSlide
+                    Projects.map( ( { avatar, title, link }, index ) =>
+                        <Slide
                             key={ index }
                             avatar={ avatar }
                             index={ index }
                             title={ title }
+                            link={link}
                         />
                     )
                 }
             </ul >
-        </HomeSlideshowStyle >
+        </SlideshowStyle >
     )
 }
 
-export default HomeSlideshow;
+export default Slideshow;

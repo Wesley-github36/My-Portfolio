@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { getBounds } from "@util/index";
 
 const HomeSlideStyle = styled.li`
-  position: absolute;
+  position: relative;
   margin-bottom: 15%;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
-  opacity: 0;
   user-select: none;
   pointer-events: none;
 
@@ -53,11 +51,12 @@ const HomeSlideStyle = styled.li`
 
 `;
 
-const HomeSlide = (
+const Slide = (
     {
         avatar,
         index,
-        title
+        title,
+        link
     }: SlideProps
 ) => {
     return (
@@ -67,7 +66,8 @@ const HomeSlide = (
                 <img
                     src={ avatar }
                     alt={ `project-avatar` }
-
+                    className="js-slide-image"
+                    data-slide-image-link={ link }
                 />
                 <h3 className="title | js-title" >{ title }</h3 >
             </div >
@@ -75,11 +75,12 @@ const HomeSlide = (
     )
 }
 
-export default HomeSlide;
+export default Slide;
 
 
 type SlideProps = {
     avatar: any,
     index: number,
-    title: string
+    title: string,
+    link: string
 }

@@ -5,7 +5,6 @@ import { useFrame, useThree } from "@react-three/fiber";
 import Projects from "@data/Projects";
 import HomeTitle from "@components/home/HomeTitle";
 
-
 const HomeTitles = () => {
 
     const scene = useRef<Scene>( null! )
