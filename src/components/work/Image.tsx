@@ -58,7 +58,7 @@ const Image = (
                     ref={ ref }
                     // @ts-ignore
                     scale={ scale }
-                > }
+                >
                     <planeGeometry args={ [ 1, 1, 8, 8 ] } />
                     <ShaderMaterial
                         image={ image }

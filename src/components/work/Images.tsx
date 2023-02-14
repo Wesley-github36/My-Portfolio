@@ -1,8 +1,6 @@
 import React from "react";
 
 import Image from "@components/work/Image";
-import { Plane } from "@react-three/drei";
-import { Box } from "@react-three/flex";
 
 const Images = (
     {

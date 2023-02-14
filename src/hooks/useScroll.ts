@@ -17,7 +17,7 @@ const useScroll = ( speedControl = 0.002 ) => {
 
     useEffect( () => {
 
-        const onScroll = ( e: Event ) => {
+        const onScroll = ( e: any ) => {
 
             if ( e.originalEvent instanceof WheelEvent )
                 states.current.speed = e.deltaY * speedControl
