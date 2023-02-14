@@ -18,7 +18,6 @@ const CaseItemStyle = styled.ul`
     flex-direction: row;
     padding: 0 10vw;
   }
-  
 `;
 
 const CaseItem = (

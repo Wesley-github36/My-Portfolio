@@ -3,7 +3,7 @@ import { Group, MathUtils, Vector3 } from "three";
 import useScroll from "@hooks/useScroll";
 import { Plane } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import WorkImage from "@components/work/WorkImage";
+import WorkImage from "./WorkImage";
 import { getBoundingRect } from "@util/index";
 
 

@@ -9,7 +9,6 @@ const HomeSlideStyle = styled.li`
   height: 100%;
   width: 100%;
   user-select: none;
-  pointer-events: none;
 
   .wrapper {
     position: relative;
@@ -24,9 +23,7 @@ const HomeSlideStyle = styled.li`
     width: 100%;
     height: 100%;
     object-fit: cover;
-
-    user-select: none;
-    pointer-events: none;
+    
 
     position: absolute;
     left: 0;

@@ -3,7 +3,7 @@ import { Scene } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import Projects from "@data/Projects";
-import HomeTitle from "@components/home/HomeTitle";
+import HomeTitle from "./HomeTitle";
 
 const HomeTitles = () => {
 

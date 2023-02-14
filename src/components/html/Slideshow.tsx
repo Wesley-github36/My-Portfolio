@@ -13,11 +13,13 @@ const SlideshowStyle = styled.div`
   width: 100vw;
   height: 100%;
   padding: 12vh 0;
+  z-index: -2;
   user-select: none;
   pointer-events: none;
-  opacity: 0;
+  overflow: hidden;
+  opacity: 0;;
 
-  @media ( width < 768px ) {
+  @media ( width < 768px ){
     padding: 15vh 15vw;
   }
 

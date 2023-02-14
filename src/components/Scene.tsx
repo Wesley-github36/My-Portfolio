@@ -1,45 +1,43 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Html, Preload } from "@react-three/drei";
 
 import Home from "@components/home/Home";
 import About from "@components/about/About";
 import NotFound from "@components/notfound/NotFound";
 import Work from "@components/work/Work";
 import { camera } from "@util/index";
-import Color from "@theme/Color";
-import { Preload } from "@react-three/drei";
 
+const Loaded = () => {
+
+    return (
+        <Html center >
+            <span style={{ color: "#000000" }}>...Loading...</span>
+        </Html>
+    )
+}
 const Scene = ( { page }: SceneProps ) => {
 
     return (
         <Canvas
             camera={ {
                 position: [ 0, 0, camera.perspective ],
-                fov     : camera.fov(),
                 near    : camera.near,
-                far     : camera.far
-            } }
-            style={ {
-                position  : "fixed",
-                width     : "100%",
-                height    : "100%",
-                left      : 0,
-                top       : 0,
-                overflow  : "hidden",
-                background: Color.colorBackground
+                far     : camera.far,
             } }
             gl={ {
                 antialias: true,
-                alpha    : true
+                alpha    : true,
+                powerPreference: "high-performance"
             } }
+            onCreated={ ( { gl } ) => gl.setPixelRatio( devicePixelRatio ) }
         >
-            <Suspense fallback={ null} >
+            <Suspense fallback={ <Loaded /> } >
                 { page === 1 && <Home /> }
                 { page === 2 && <About /> }
                 { page === 3 && <Work /> }
                 { !page && <NotFound /> }
-
-                <Preload />
+                <Preload all />
             </Suspense >
         </Canvas >
     )

@@ -1,6 +1,6 @@
 export const RoutePath = {
     Home    : "/",
     About   : "/about",
-    Work    : "/work/:workTitle",
+    Work    : "/work/:workLink",
     NotFound: "*"
 }

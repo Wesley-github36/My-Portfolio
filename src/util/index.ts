@@ -24,6 +24,30 @@ export const lerpPos = (
     return margin * ( index + position )
 }
 
+/**
+ * Converts a width of DOM into
+ * THREE units
+ * @param DOMWidth [number]
+ * @param THREEViewportWidth [number]
+ *
+ */
+export const DOMWidth2THREEUnits = ( DOMWidth: number, THREEViewportWidth: number ) => {
+    const percent = DOMWidth / screen.width;
+    return percent * THREEViewportWidth
+}
+
+/**
+ * Converts a width of DOM into
+ * THREE units
+ * @param DOMHeight [number]
+ * @param THREEViewportHeight [number]
+ *
+ */
+export const DOMHeight2THREEUnits = ( DOMHeight: number, THREEViewportHeight: number ) => {
+    const percent = DOMHeight / screen.height;
+    return percent * THREEViewportHeight
+}
+
 
 export const getBoundingRect = (
     querySelectorParent: string,
@@ -49,10 +73,10 @@ export const getBoundingRect = (
 
 
 export const camera = {
-    perspective: 800,
-    near       : 1,
-    far        : 2000,
-    angle      : Math.PI / 6,
+    perspective: 2,
+    near       : 0.1,
+    far        : 1000,
+    angle      : Math.PI / 9,
     fov        : function () {
         return ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / this.perspective ) ) ) / Math.PI
     }

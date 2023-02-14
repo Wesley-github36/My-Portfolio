@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+
 import Scene from "@components/Scene";
-import Slideshow from "@components/html/Slideshow";
-import Cases from "@components/html/Cases";
 
 const ContentStyle = styled.div`
   position: fixed;
@@ -11,6 +10,7 @@ const ContentStyle = styled.div`
   height: 100%;
   width: 100%;
   background: #dedede;
+  //background: red;
 `;
 
 const Content = (
@@ -20,9 +20,9 @@ const Content = (
 ) => {
     return (
         <ContentStyle >
-            <Slideshow />
-            <Cases />
-            <Scene page={page} />
+            {/*<Slideshow />*/ }
+            {/*<Articles />*/ }
+            <Scene page={ page } />
         </ContentStyle >
     )
 }

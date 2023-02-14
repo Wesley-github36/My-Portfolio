@@ -14,27 +14,33 @@ export type IProjectDetails = {
 const ProjectDetails = [
     {
         id: 0,
-        images: [img1, img1, img1, img1, img1, img1],
+        images: [ img1, img1, img1, img1, img1, img1 ],
+        heights: [ 0.6, 0.42, 0.29, 0.5, 0.3, 0.44 ],
         link: "dan-j-wills"
     }, {
         id: 1,
         images: [img2, img2, img2, img2, img2, img2],
+        heights: [ 0.6, 0.3, 0.6, 0.6, 0.6, 0.6 ],
         link: "deer-valley"
     }, {
         id: 2,
         images: [img3, img3, img3, img3, img3, img3],
+        heights: [ 0.6, 0.55, 0.6, 0.55, 0.6, 0.55 ],
         link: "embem-rings"
     }, {
         id: 3,
         images: [img4, img4, img4, img4, img4, img4],
+        heights: [ 0.6, 0.6, 0.6, 0.6, 0.6, 0.6 ],
         link: "dita-wear"
     }, {
         id: 4,
         images: [img5, img5, img5, img5, img5, img5],
+        heights: [ 0.6, 0.6, 0.6, 0.6, 0.24, 0.6 ],
         link: "binne-djik"
     }, {
         id: 5,
         images: [img6, img6, img6, img6, img6, img6],
+        heights: [ 0.6, 0.4, 0.3, 0.34, 0.6, 0.34 ],
         link: "tagli-vini"
     }
 ];

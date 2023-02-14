@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { ShaderMaterial, Texture, Vector2 } from "three";
-import { camera } from "@util/index";
+import React, { useEffect, useRef } from "react";
 import { useTexture } from "@react-three/drei";
+import { Vector2, ShaderMaterial as TShaderMaterial, Texture } from "three";
+
+import { camera } from "@util/index";
 
 const vertexShader   = `
     varying vec2 vUv;
@@ -67,49 +68,56 @@ const vertexShader   = `
 }
 `;
 
-const useMaterial = (
-    parameters: Props
+const ShaderMaterial = (
+    {
+        image,
+        size
+    }: Props
 ) => {
 
-    console.log("material rendered")
+    const texture  = useTexture( image ) as Texture
+    const ref      = useRef<TShaderMaterial>( null! )
+    const uniforms = useRef<UniformsProps>( {
+        uTime     : { value: 0 },
+        uAlpha    : { value: 1 },
+        uTexture  : { value: 0 },
+        uMeshSize : { value: new Vector2( 0, 0 ) },
+        uImageSize: { value: new Vector2( 0, 0 ) },
+        uScale    : { value: 1 },
+        uVelo     : { value: 0 },
+        uAngle    : { value: camera.angle }
+    } )
 
-    const material = useRef( new ShaderMaterial( {
-        vertexShader  : vertexShader,
-        fragmentShader: fragmentShader,
-        uniforms      : {
-            uTime     : { value: 0 },
-            uAlpha    : { value: 1 },
-            uTexture  : { value: 0 },
-            uMeshSize : { value: new Vector2( 0, 0 ) },
-            uImageSize: { value: new Vector2( 0, 0 ) },
-            uScale    : { value: 1 },
-            uVelo     : { value: 0 },
-            uAngle    : { value: camera.angle }
-        },
-        transparent   : true
-    } ) )
-    const texture      = useTexture( parameters.image ) as Texture;
+    uniforms.current.uTexture.value   = texture;
+    uniforms.current.uImageSize.value = [ texture.image.naturalWidth, texture.image.naturalHeight ]
+    uniforms.current.uScale.value     = Math.max( ...size ) / Math.hypot( ...size )
+    uniforms.current.uMeshSize.value  = size
 
-    material.current.uniforms.uScale.value = Math.max( ...parameters.size ) / Math.hypot( ...parameters.size )
-    material.current.uniforms.uMeshSize.value = parameters.size
-
-    useEffect( () => {
-
-        material.current.uniforms.uTexture.value   = texture
-        material.current.uniforms.uImageSize.value = parameters.imageNaturalSize
-
-    }, [] )
-
-
-    return material;
-
+    return (
+        <shaderMaterial
+            ref={ ref }
+            uniforms={ uniforms.current }
+            vertexShader={ vertexShader }
+            fragmentShader={ fragmentShader }
+            transparent
+        />
+    )
 }
 
-export default useMaterial;
+export default ShaderMaterial;
 
 
 type Props = {
-    image: any,
+    image: string,
     size: number[],
-    imageNaturalSize: number[]
+}
+type UniformsProps = {
+    uTime: { value: number },
+    uAlpha: { value: number },
+    uTexture: { value: number | Texture },
+    uMeshSize: { value: Vector2 | number[] },
+    uImageSize: { value: Vector2 | number[] },
+    uScale: { value: number },
+    uVelo: { value: number },
+    uAngle: { value: number }
 }

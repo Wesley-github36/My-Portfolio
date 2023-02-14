@@ -1,33 +1,37 @@
 import { useEffect, useRef } from "react";
 import { Vector3 } from "three";
 
+import useLayout from "@hooks/useLayout";
+import VirtualScroll from 'virtual-scroll'
 
-const useScroll = ( speedControl = 0.0025 ) => {
+const scroller = new VirtualScroll()
 
-    const states = useRef( {
+const useScroll = ( speedControl = 0.002 ) => {
+
+    const states       = useRef( {
         position: 0,
         speed   : 0,
-        vector: new Vector3()
+        vector  : new Vector3()
     } )
+    const { isMobile } = useLayout()
 
     useEffect( () => {
 
-        const onScroll = ( e: WheelEvent | TouchEvent ) => {
-            if ( e instanceof WheelEvent )
-                states.current.speed = -e.deltaY * speedControl
+        const onScroll = ( e: Event ) => {
+
+            if ( e.originalEvent instanceof WheelEvent )
+                states.current.speed = e.deltaY * speedControl
             else
-                states.current.speed = e.changedTouches[ 0 ].clientY * speedControl / 10;
+                states.current.speed = -e.deltaY * speedControl;
 
-            states.current.vector.y += states.current.speed
+            if ( isMobile ) states.current.vector.set( 0, states.current.vector.y + states.current.speed, 0 )
+            else states.current.vector.set( states.current.vector.x + states.current.speed, 0, 0 )
+
         }
 
-        window.addEventListener( "wheel", onScroll )
-        window.addEventListener( "touchmove", onScroll )
 
-        return () => {
-            window.removeEventListener( "wheel", onScroll )
-            window.removeEventListener( "touchmove", onScroll )
-        }
+        scroller.on( onScroll )
+        return () => { scroller.off( onScroll ) }
 
     }, [] )
 

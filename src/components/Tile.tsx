@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
+import React, { ForwardedRef, forwardRef, useRef, useState } from "react";
 import { Group, Mesh, ShaderMaterial, Texture, Vector2 } from "three";
 import { camera } from "@util/index";
 import { Plane, useTexture } from "@react-three/drei";
@@ -80,9 +80,10 @@ const Tile = forwardRef( (
     ref: ForwardedRef<Group>
 ) => {
 
-    const mesh               = useRef<Mesh>( null! )
-    const [ shaderMaterial ] = useState( new ShaderMaterial() )
-    const texture            = useTexture( image ) as Texture
+    const mesh                     = useRef<Mesh>( null! );
+    const [ shaderMaterial ]       = useState( new ShaderMaterial() )
+    const texture                  = useTexture( image ) as Texture
+
 
     return (
         <group
@@ -111,8 +112,8 @@ const Tile = forwardRef( (
                 material-transparent
                 material-uniforms-uTexture-value={ texture }
                 material-uniforms-uImageSize-value={ [ texture.image.naturalWidth, texture.image.naturalHeight ] }
-                material-uniforms-uScale-value={ Math.max( width, height ) / Math.hypot( width, height )}
-                material-uniforms-uMeshSize-value = {[ width, height ]}
+                material-uniforms-uScale-value={ Math.max( width, height ) / Math.hypot( width, height ) }
+                material-uniforms-uMeshSize-value={ [ width, height ] }
             />
         </group >
     )
