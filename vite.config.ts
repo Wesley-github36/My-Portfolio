@@ -5,6 +5,7 @@ import * as path from "path";
 // https://vitejs.dev/config/
 export default defineConfig( {
     plugins: [ react() ],
+    assetsInclude: ['**/*.glb'],
     resolve: {
         alias: {
             "@data"      : path.resolve( __dirname, "src/data/" ),
@@ -13,7 +14,8 @@ export default defineConfig( {
             "@res"       : path.resolve( __dirname, "src/res/" ),
             "@theme"     : path.resolve( __dirname, "src/theme/" ),
             "@util"      : path.resolve( __dirname, "src/util/" ),
-            "@navigation": path.resolve( __dirname, "src/navigation/" )
+            "@navigation": path.resolve( __dirname, "src/navigation/" ),
+            "@": path.resolve( __dirname, "src/" )
         }
     }
 } )

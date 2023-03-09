@@ -1,29 +1,23 @@
-import { useThree } from "@react-three/fiber";
+import { useThree }            from "@react-three/fiber";
+import { PixelsToUnits } from "@util/index";
 
 const useLayout = () => {
 
-    const { viewport } = useThree( );
+    const { viewport } = useThree();
 
-    // const wRatio = width / window.innerWidth;  // units / px
-    // const hRatio = height / window.innerHeight;
+    const [ mobBreakPoint, tabSmallBreakpoint, tabBigBreakpoint ]
+              = PixelsToUnits( [ 568, 812, 1111 ], viewport.width )
 
-    // const mobileW = 1023 * wRatio;
+    if ( viewport.width <= mobBreakPoint )
+        return { isMobile: true }
 
-    const mobilePercentageWidth = 1023 / screen.width;
-    const mobileWithIn3Units = mobilePercentageWidth * viewport.width;
+    if ( viewport.width <= tabSmallBreakpoint )
+        return { isTabletS: true }
 
-    if ( viewport.width <= mobileWithIn3Units )
-        return {
-            isMobile: true,
-            // hRatio  : hRatio,
-            // wRatio: wRatio
-        }
+    if ( viewport.width <= tabBigBreakpoint )
+        return { isTabletL: true }
 
-    return {
-        isMobile: false,
-        // hRatio: hRatio,
-        // wRatio: wRatio
-    }
+    return { isDesktop: true }
 }
 
 export default useLayout;

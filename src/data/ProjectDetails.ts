@@ -16,32 +16,53 @@ const ProjectDetails = [
         id: 0,
         images: [ img1, img1, img1, img1, img1, img1 ],
         heights: [ 0.6, 0.42, 0.29, 0.5, 0.3, 0.44 ],
-        link: "dan-j-wills"
+        link: "dan-j-wills",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
     }, {
         id: 1,
         images: [img2, img2, img2, img2, img2, img2],
         heights: [ 0.6, 0.3, 0.6, 0.6, 0.6, 0.6 ],
-        link: "deer-valley"
+        link: "deer-valley",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
+
     }, {
         id: 2,
         images: [img3, img3, img3, img3, img3, img3],
         heights: [ 0.6, 0.55, 0.6, 0.55, 0.6, 0.55 ],
-        link: "embem-rings"
+        link: "embem-rings",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
+
+
     }, {
         id: 3,
         images: [img4, img4, img4, img4, img4, img4],
         heights: [ 0.6, 0.6, 0.6, 0.6, 0.6, 0.6 ],
-        link: "dita-wear"
+        link: "dita-wear",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
+
+
     }, {
         id: 4,
         images: [img5, img5, img5, img5, img5, img5],
         heights: [ 0.6, 0.6, 0.6, 0.6, 0.24, 0.6 ],
-        link: "binne-djik"
+        link: "binne-djik",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
+
+
     }, {
         id: 5,
         images: [img6, img6, img6, img6, img6, img6],
         heights: [ 0.6, 0.4, 0.3, 0.34, 0.6, 0.34 ],
-        link: "tagli-vini"
+        link: "tagli-vini",
+        tech: ["ReactJS", "WebGL", "React.THREE", "THREE.js"],
+        url: "/"
+
+
     }
 ];
 

@@ -1,12 +1,13 @@
-import React from "react";
+import React                     from "react";
 import { BrowserRouter, Routes } from "react-router-dom"
+import { AnimatePresence }       from 'framer-motion'
 
 const Router = ( { children }: RouterProps ) => {
-
+	
     return (
         <BrowserRouter>
             <Routes>
-                { children }
+				{ children }
             </Routes>
         </BrowserRouter>
     )

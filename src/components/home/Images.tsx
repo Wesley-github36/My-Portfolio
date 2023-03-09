@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Box, Flex } from "@react-three/flex";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Group, Scene } from "three";
+import { gsap } from "gsap";
 
 import Projects from "@data/Projects";
 import Image from "@components/home/Image";
@@ -9,33 +11,52 @@ import Image from "@components/home/Image";
 const Images = () => {
 
     const { viewport } = useThree()
+    const box          = useRef<Group>( null! )
+    const scene        = useRef<Scene>( null! )
+
+    useEffect( () => {
+        gsap.from( box.current.position, {
+            z       : -25,
+            duration: 1,
+            ease    : "expo.out"
+        } )
+    }, [] )
+
+    useFrame(({ gl, camera }) => {
+
+        gl.clearDepth()
+        gl.render( scene.current, camera )
+    }, 1 )
 
     return (
-        <Flex
-            position={ [ -viewport.width / 2, viewport.height / 2, 0 ] }
-            size={ [ viewport.width, viewport.height, 0 ] }
-        >
-            <Box
-                dir={ "column" }
-                width={ "100%" }
-                height={ "100%" }
-                centerAnchor
+        <scene ref={ scene } >
+            <Flex
+                position={ [ -viewport.width / 2, viewport.height / 2, 0 ] }
+                size={ [ viewport.width, viewport.height, 0 ] }
             >
-                { ( width, height ) => (
-                    Projects.map( ( project, index ) => (
-                        <Image
-                            key={ `image-${ index }` }
-                            image={ project.avatar }
-                            link={ project.link }
-                            width={ width }
-                            height={ height }
-                            index={ index }
-                            length={ Projects.length }
-                        />
-                    ) )
-                ) }
-            </Box >
-        </Flex >
+                <Box
+                    ref={ box }
+                    dir={ "column" }
+                    width={ "100%" }
+                    height={ "100%" }
+                    centerAnchor
+                >
+                    { ( width, height ) => (
+                        Projects.map( ( project, index ) => (
+                            <Image
+                                key={ `image-${ index }` }
+                                image={ project.avatar }
+                                link={ project.link }
+                                width={ width }
+                                height={ height }
+                                index={ index }
+                                length={ Projects.length }
+                            />
+                        ) )
+                    ) }
+                </Box >
+            </Flex >
+        </scene >
     )
 }
 

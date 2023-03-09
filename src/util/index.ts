@@ -1,11 +1,14 @@
-export const lerp = ( start: number, speed: number ) => {
+import { createRef } from "react";
+import { MathUtils } from "three";
+
+export const lerp = (start: number, speed: number) => {
     start += speed;
     speed *= 0.8;
 
-    const rounded = Math.round( start );
-    const diff    = rounded - start;
+    const rounded = Math.round(start);
+    const diff = rounded - start;
 
-    start += Math.sign( diff ) * Math.pow( Math.abs( diff ), 0.7 ) * 0.015;
+    start += Math.sign(diff) * Math.pow(Math.abs(diff), 0.7) * 0.015;
 
     return { speed, start }
 }
@@ -14,70 +17,73 @@ export const lerpPos = (
     length: number,
     index: number,
     margin: number,
-    position: number,
-    infinite = true
+    position: number
 ) => {
-    if ( infinite )
-        return ( margin * ( length - index + position ) + ( 1000000 ) )
-            % ( length * margin ) - length / 2 * margin
 
-    return margin * ( index + position )
+    return (margin * (length - index + position) + (600000))
+        % (length * margin) - length / 2 * margin
 }
 
 /**
- * Converts a width of DOM into
- * THREE units
- * @param DOMWidth [number]
- * @param THREEViewportWidth [number]
+ * Converts a pixel size into
+ * THREE units along a
+ * dimension
  *
+ * @param size
+ * @param threeWidth
+ * @param dimension
  */
-export const DOMWidth2THREEUnits = ( DOMWidth: number, THREEViewportWidth: number ) => {
-    const percent = DOMWidth / screen.width;
-    return percent * THREEViewportWidth
-}
 
-/**
- * Converts a width of DOM into
- * THREE units
- * @param DOMHeight [number]
- * @param THREEViewportHeight [number]
- *
- */
-export const DOMHeight2THREEUnits = ( DOMHeight: number, THREEViewportHeight: number ) => {
-    const percent = DOMHeight / screen.height;
-    return percent * THREEViewportHeight
-}
-
-
-export const getBoundingRect = (
-    querySelectorParent: string,
-    querySelectorChildren: string
+export const PixelsToUnits = (
+    size: number[] | number,
+    threeWidth: number,
+    dimension?: "width" | "height" | undefined
 ) => {
-    const parentArray = [ ...document.querySelectorAll( querySelectorParent ) ] as Element[];
 
-    return parentArray.map( ( element ) => {
-        const image             = element.querySelector( querySelectorChildren ) as HTMLImageElement
-        const paddingBottom     = parseInt( window.getComputedStyle( element )
-                                                  .getPropertyValue( "padding-bottom" )
-                                                  .slice( 0, -2 ) );
-        const { width, height } = image.getBoundingClientRect();
+    const viewport = dimension === "height" ? document.documentElement.clientHeight
+        : document.documentElement.clientWidth
 
-        return {
-            imageElement: image,
-            gap         : paddingBottom,
-            width       : width,
-            height      : height
-        }
-    } );
+    if (typeof size === "number")
+        return [size / viewport * threeWidth]
+
+
+    return size.map((s, index) => s / viewport * threeWidth)
+
 }
 
 
 export const camera = {
     perspective: 2,
-    near       : 0.1,
-    far        : 1000,
-    angle      : Math.PI / 9,
-    fov        : function () {
-        return ( 180 * ( 2 * Math.atan( window.innerHeight / 2 / this.perspective ) ) ) / Math.PI
+    near: 0.1,
+    far: 1000,
+    angle: Math.PI / 9,
+    fov: function () {
+        return (180 * (2 * Math.atan(window.innerHeight / 2 / this.perspective))) / Math.PI
     }
+}
+
+
+export const store = {
+    index: -1,
+    midPos: NaN,
+    animationComplete: false,
+    imagePos: NaN,
+    groupCenter: NaN
+}
+
+
+export const mergeIndexes = (index1: number, index2: number, length: number) => {
+    const difference = Math.abs(index1 - index2)
+
+    if (index2 === index1)
+        return index1;
+
+    // index2 = 29
+    // index1 = 0
+    if (index2 > index1)
+        if (index2 + difference === length)
+            return index1;
+
+
+    //index2 < index1
 }

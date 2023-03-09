@@ -5,9 +5,14 @@ import { Vector2, ShaderMaterial as TShaderMaterial, Texture } from "three";
 import { camera } from "@util/index";
 
 const vertexShader   = `
+
     varying vec2 vUv;
+    uniform float uTime;
+    varying vec3 vPosition;
+
 
     void main() {
+        
         vUv = uv;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
@@ -21,6 +26,8 @@ const vertexShader   = `
     uniform float uScale;
     uniform float uAngle;
     uniform float uAlpha;
+    uniform float uTime;
+    
 
     vec2 scaleUV(vec2 uv, float scl) {
         float mid = 0.5;
@@ -68,25 +75,27 @@ const vertexShader   = `
 }
 `;
 
+let time = 0
+
 const ShaderMaterial = (
     {
         image,
-        size
+        size,
     }: Props
 ) => {
 
     const texture  = useTexture( image ) as Texture
     const ref      = useRef<TShaderMaterial>( null! )
-    const uniforms = useRef<UniformsProps>( {
-        uTime     : { value: 0 },
-        uAlpha    : { value: 1 },
-        uTexture  : { value: 0 },
-        uMeshSize : { value: new Vector2( 0, 0 ) },
-        uImageSize: { value: new Vector2( 0, 0 ) },
-        uScale    : { value: 1 },
-        uVelo     : { value: 0 },
-        uAngle    : { value: camera.angle }
-    } )
+	const uniforms = useRef<UniformsProps>( {
+                                uTime     : { value: 0 },
+                                uAlpha    : { value: 0 },
+                                uTexture  : { value: 0 },
+                                uMeshSize : { value: new Vector2( 0, 0 ) },
+                                uImageSize: { value: new Vector2( 0, 0 ) },
+                                uScale    : { value: 1 },
+                                uVelo     : { value: 0 },
+                                uAngle    : { value: 0 }
+    })
 
     uniforms.current.uTexture.value   = texture;
     uniforms.current.uImageSize.value = [ texture.image.naturalWidth, texture.image.naturalHeight ]

@@ -8,7 +8,6 @@ declare module "@react-three/fiber" {
         group: Object3DNode<Group, typeof Group>,
 
     }
-
 }
 
 

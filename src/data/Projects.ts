@@ -1,9 +1,16 @@
-import img from "@res/drawable/01.jpg"
-import img2 from "@res/drawable/02.jpg"
-import img3 from "@res/drawable/03.jpg"
-import img4 from "@res/drawable/04.jpg"
-import img5 from "@res/drawable/05.jpg"
-import img6 from "@res/drawable/06.jpg"
+//import img from "@res/drawable/CTCover.avif"
+//import img2 from "@res/drawable/DanCover.avif"
+//import img3 from "@res/drawable/DVCover.avif"
+//import img4 from "@res/drawable/DitaCover.avif"
+//import img5 from "@res/drawable/GemmyIntro.avif"
+//import img6 from "@res/drawable/EMcover.avif"
+
+import img from "@res/drawable/adventure-time.jpg";
+import img2 from "@res/drawable/cult.webp"
+import img3 from "@res/drawable/one-plus.jpg"
+import img4 from "@res/drawable/kaleidoz.jpg"
+import img5 from "@res/drawable/neoway.webp"
+import img6 from "@res/drawable/redis.jpg"
 
 
 const Projects = [
